@@ -367,6 +367,8 @@ var Controller = {
             pool.on('peerready', function(peer, addr) {
                 
                 //console.log("Connect: " + peer.version, peer.subversion, peer.bestHeight, peer.host);
+                //
+                send("metric", { type: "peerready", value: peer.host });
 
                 if(network.quorum != true && network.discoveredPeers >= network.quorum){
 
@@ -395,6 +397,7 @@ var Controller = {
 
                 try { 
 
+                    send("metric", { event: "peerinv", value: peer.host });
                     //console.log("PeerINV: " + peer.version, peer.subversion, peer.bestHeight, peer.host);
 
                     if(peer.subversion != undefined && peer.subversion.indexOf("/Satoshi:") > -1){
@@ -417,7 +420,8 @@ var Controller = {
 
             pool.on('peerblock', (peer, { net, block }) => {
 
-                log.info("PeerBlock: " + peer.version, peer.subversion, peer.bestHeight, peer.host);
+                send("metric", { event: "peerblock", value: block.hash().toString("hex") }); 
+                //log.info("PeerBlock: " + peer.version, peer.subversion, peer.bestHeight, peer.host);
                 //console.log("peer best height submitting block: "+peer.bestHeight);
                 //console.log("LAST BLOCK "+network.state.bestHeight);
 
@@ -442,10 +446,9 @@ var Controller = {
 
             setInterval(function() {
 
-                log.info(ID+" rover peers "+pool.numberConnected());
+                send("metric", { event: "peersum", value: pool.numberConnected() });
 
-            }, 45000);
-
+            }, 60000);
 
     },
 

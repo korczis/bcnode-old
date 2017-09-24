@@ -40,6 +40,24 @@ function Miner() {
 
 Miner.prototype = {
 
+    setWork: function(work) {
+
+        //com1 a b c 
+        //com2 a b 
+
+        //row1 a1 b1 c1
+        //row2 a2 b2 c1
+        //row3 a3 b3 c1
+
+        //var w = [
+        //   "btcHash",
+        //   "ethHash",
+        //   "ColHash"
+        //]
+            
+
+    },
+
     getWork: function(){
 
         var self = this;
@@ -49,7 +67,7 @@ Miner.prototype = {
         var work = superedges.reduce(function(all, a) {
 
             if(self.state[a].hash != undefined && self.state[a].hash != false){
-                all.push(self.state[a].hash);
+                all.push(self.state[a].work);
             }
 
             return all;
@@ -76,6 +94,7 @@ Miner.prototype = {
 
                 console.log("new "+tag+" : "+block.data.blockHash);
                 self.state[edge.org].hash = block.data.blockHash;
+                self.state[edge.org].work = string.doubleSha(block.data.blockHash);
 
              }
 

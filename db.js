@@ -30,7 +30,6 @@ DB.prototype = {
 
         var self = this;
 
-
             self.record.findOne(query, function(err, b){
                 
                 if(b != undefined){

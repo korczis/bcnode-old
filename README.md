@@ -14,6 +14,9 @@ Mining node with built-in block rover, DHT, and client discovery.
 
 ## Install
 
+* npm install
+* node init.js && node miner.js
+
 ## Message Types
 
 ## Block Reward
